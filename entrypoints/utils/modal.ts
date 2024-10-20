@@ -1,5 +1,6 @@
 import { Modal } from "../types/modal-type";
-import { modalHtml } from "./modalHtml";
+import { modalHtml } from "./constants";
+import { setupMessageHandler } from "./messageHandler";
 
 export function createModal(): Modal {
   document.body.insertAdjacentHTML("beforeend", modalHtml);
@@ -37,8 +38,11 @@ export function createModal(): Modal {
       modalElement.style.display = "none";
       modalElement.removeEventListener("click", handleOutsideClick);
       document.removeEventListener("keydown", handleEscKey);
+      messageHandler.resetModal();
     },
   };
+
+  const messageHandler = setupMessageHandler(modal);
 
   return modal;
 }

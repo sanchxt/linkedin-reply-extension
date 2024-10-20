@@ -1,8 +1,14 @@
 import { createModal } from "./utils/modal";
+import { setupIconInjector } from "./utils/iconInjector";
+import { setupMessageHandler } from "./utils/messageHandler";
+
 export default defineContentScript({
   matches: ["*://*.linkedin.com/*"],
   main() {
     const modal = createModal();
+    const messageHandler = setupMessageHandler(modal);
+    setupIconInjector(modal, messageHandler);
+
     // ensures that a click outside the modal hides it if it's open
     document.addEventListener("click", (event: MouseEvent) => {
       const target = event.target as HTMLElement;
